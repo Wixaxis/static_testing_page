@@ -2,18 +2,38 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEST SignupForms</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.landpage-preview.com/assets/js/landend/frodo.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TEST SignupForms</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://www.landpage-preview.com/assets/js/landend/frodo.js"></script>
 </head>
 
 <body class="bg-gray-200 flex flex-col gap-2 py-3 items-center justify-center h-fit bg-white">
-    Testing square template
-    <div class="w-4/5 h-fit border border-black min-h-80 p-3">
-        <h1 class='text-2xl m-10'>Kursy Grupowe</h1>
-<iframe src='https://qa-6.an-internal-tools.com/external/calendar/3?code=seOGQPgtb2g95hBR' width='100%' height='500px'></iframe>
-    </div>
+	<button id="freshBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">Fetch fresh &
+		reload</button>
+	<script>
+		document.getElementById('freshBtn').addEventListener('click', async () => {
+			try {
+				const res = await fetch(location.href, {cache: 'no-store', credentials: 'same-origin'});
+				if (!res.ok) throw new Error(res.status);
+				let html = await res.text();
+				const ts = Date.now();
+				const doc = new DOMParser().parseFromString(html, 'text/html');
+				doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(l => {const u = new URL(l.href, location.href); u.searchParams.set('v', ts); l.href = u.toString()});
+				doc.querySelectorAll('script[src]').forEach(s => {const u = new URL(s.src, location.href); u.searchParams.set('v', ts); s.src = u.toString()});
+				document.open(); document.write('<!doctype html>\n' + doc.documentElement.outerHTML); document.close();
+			} catch (e) {
+				location.reload();
+			}
+		});
+	</script>
+	Testing square template
+	<div class="w-4/5 h-fit border border-black min-h-80 p-3">
+		<h1 class='text-2xl m-10'>Kursy Grupowe</h1>
+		<iframe src='https://qa-6.an-internal-tools.com/external/calendar/3?code=seOGQPgtb2g95hBR' width='100%'
+			height='500px'></iframe>
+	</div>
 </body>
+
 </html>
