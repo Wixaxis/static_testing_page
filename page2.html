@@ -9,24 +9,42 @@
 </head>
 
 <body class="bg-gray-200 flex flex-col gap-2 py-3 items-center justify-center h-fit bg-white">
-    <h1>Page 2</h1>
+    <button id="freshBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">
+        Fetch fresh & reload
+    </button>
     <nav>
         <a href="index.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Home</a>
         <a href="page1.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Page 1</a>
         <a href="page2.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Page 2</a>
     </nav>
-    <p>This is page 2 content.</p>
+    <p>TABELA BEZ LIVEKID</p>
 
     <div class="w-4/5 h-fit border border-black min-h-80 p-3">
-        <h1 class='text-2xl m-10'>Kursy Grupowe - livekid</h1>
+        <h1 class='text-2xl m-10'>Kursy Grupowe - no livekid</h1>
 
         <div class='activenow-table-container'>
             <center><img src='https://www.activenow.io/assets/ripple.gif' width='100px' /></center>
             <script async
-                src='http://localhost:3000/external/signup_table/load_by_js?city_id=&code=hVsFNSbQejoVK7xo&proficiency_id=&school_id=1&signup_table_id=9&venue_id=&livekid=true&zz='></script>
+                src='https://qa-6.an-internal-tools.com/external/signup_table/load_by_js?city_id=&code=seOGQPgtb2g95hBR&proficiency_id=&school_id=3&signup_table_id=13&venue_id=&zz='></script>
         </div>
-
     </div>
+
+    <script>
+        document.getElementById('freshBtn').addEventListener('click', async () => {
+            try {
+                const res = await fetch(location.href, {cache: 'no-store', credentials: 'same-origin'});
+                if (!res.ok) throw new Error(res.status);
+                let html = await res.text();
+                const ts = Date.now();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(l => {const u = new URL(l.href, location.href); u.searchParams.set('v', ts); l.href = u.toString()});
+                doc.querySelectorAll('script[src]').forEach(s => {const u = new URL(s.src, location.href); u.searchParams.set('v', ts); s.src = u.toString()});
+                document.open(); document.write('<!doctype html>\n' + doc.documentElement.outerHTML); document.close();
+            } catch (e) {
+                location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>
