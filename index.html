@@ -2,40 +2,46 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TEST SignupForms</title>
-	<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activenow Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-200 flex flex-col gap-2 py-3 items-center justify-center h-fit bg-white">
-	<button id="freshBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">
-		Fetch fresh & reload
-	</button>
-	<nav>
-		<a href="index.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Home</a>
-		<a href="page1.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Page 1</a>
-		<a href="page2.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Page 2</a>
-	</nav>
-	Testing square template
+<body class="bg-white min-h-screen flex flex-col gap-6 py-6 items-center">
+    <button id="freshBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">
+        Fetch fresh & reload
+    </button>
+    <nav class="flex flex-wrap justify-center gap-2 px-4">
+        <a href="index.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Home</a>
+        <a href="page1.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Group Cyclic Events Table</a>
+        <a href="page2.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Camps</a>
+        <a href="page3.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Group Onetime Events</a>
+        <a href="page4.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Court reservations</a>
+        <a href="page5.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Personal Cyclic Events</a>
+        <a href="page6.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Trial Lessons</a>
+    </nav>
 
+    <main class="flex flex-1 items-center justify-center">
+        <h1 class="text-3xl font-semibold">Currently lodaed: staging</h1>
+    </main>
 
-	<script>
-		document.getElementById('freshBtn').addEventListener('click', async () => {
-			try {
-				const res = await fetch(location.href, {cache: 'no-store', credentials: 'same-origin'});
-				if (!res.ok) throw new Error(res.status);
-				let html = await res.text();
-				const ts = Date.now();
-				const doc = new DOMParser().parseFromString(html, 'text/html');
-				doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(l => {const u = new URL(l.href, location.href); u.searchParams.set('v', ts); l.href = u.toString()});
-				doc.querySelectorAll('script[src]').forEach(s => {const u = new URL(s.src, location.href); u.searchParams.set('v', ts); s.src = u.toString()});
-				document.open(); document.write('<!doctype html>\n' + doc.documentElement.outerHTML); document.close();
-			} catch (e) {
-				location.reload();
-			}
-		});
-	</script>
+    <script>
+        document.getElementById('freshBtn').addEventListener('click', async () => {
+            try {
+                const res = await fetch(location.href, {cache: 'no-store', credentials: 'same-origin'});
+                if (!res.ok) throw new Error(res.status);
+                let html = await res.text();
+                const ts = Date.now();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(l => {const u = new URL(l.href, location.href); u.searchParams.set('v', ts); l.href = u.toString()});
+                doc.querySelectorAll('script[src]').forEach(s => {const u = new URL(s.src, location.href); u.searchParams.set('v', ts); s.src = u.toString()});
+                document.open(); document.write('<!doctype html>\n' + doc.documentElement.outerHTML); document.close();
+            } catch (e) {
+                location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>
